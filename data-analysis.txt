@@ -59,3 +59,43 @@ df.describe().T #all descriptive statistics
 df.isnull().values.any() #Are there any missing observations?
 
 df.dropna().describe().T #descriptive display of all missing data
+
+df["Il"].value_counts().plot.barh().set_title("Enerji Verileri");
+
+## GRAPHICS OF DATA USING THE SEABORN LIBRARY 
+
+sns.catplot(x="PanelCesidi",y="EnerjiVerileri",data=df) # where data is low, energy density is also low
+
+sns.barplot(x = "PanelCesidi", y = "EnerjiVerileri",hue = "InvertorCesidi", data=df)
+
+sns.barplot(x = "PanelCesidi", y = "EnerjiVerileri",hue = "Albedo", data=df)
+
+
+df.groupby(["PanelCesidi","Albedo"])["EnerjiVerileri"].mean() #There is a difference between the chart values above and the actual values. We can see this in the grouping below
+#When you switch to 3D, the library applies changes to see the image better
+# when crossed over and graphed
+
+sns.distplot(df.EnerjiVerileri, bins=5, kde = False); #create histogram
+#"kde" value represents probability density value
+
+sns.distplot(df.EnerjiVerileri);
+
+sns.distplot(df.EnerjiVerileri, hist= False); #just to see the density graph
+
+sns.kdeplot(df.EnerjiVerileri, shade = True); #density graph filled
+#Concerned with the density of energy data
+
+(sns.FacetGrid(df,
+               hue="InvertorCesidi",
+               height=10,
+               xlim=(50000, 250000))
+.map(sns.kdeplot, "EnerjiVerileri", shade = True)
+.add_legend()
+)
+
+sns.catplot(x = "PanelCesidi", y = "EnerjiVerileri",hue = "InvertorCesidi", kind=  "point",data = df); 
+#The fact that the data above one is close to each other indicates grouping, and the far data is energy data.
+# means it carries distinctive information for
+#data being far away shows that different information is carried between "inverterceidi" and "panelcesidi".
+
+sns.boxplot(x=df["EnerjiVerileri"]);
