@@ -99,3 +99,42 @@ sns.catplot(x = "PanelCesidi", y = "EnerjiVerileri",hue = "InvertorCesidi", kind
 #data being far away shows that different information is carried between "inverterceidi" and "panelcesidi".
 
 sns.boxplot(x=df["EnerjiVerileri"]);
+
+sns.boxplot(x=df["HavaDurumu"]); #Checking for outliers
+
+sns.boxplot(x=df["GuneslenmeSuresi"]);
+
+sns.jointplot(x = "Date", y = "EnerjiVerileri", data = df); #common scatter plot
+
+sns.boxplot(x = "PanelCesidi", y = "EnerjiVerileri",data = df);
+
+sns.boxplot(x = "InvertorCesidi", y = "EnerjiVerileri",data = df);
+
+sns.boxplot(x = "Albedo", y = "EnerjiVerileri",data = df);
+
+sns.boxplot(x = "GuneslenmeSuresi", y = "EnerjiVerileri",data = df);
+
+sns.boxplot(x = "SahaYili", y = "EnerjiVerileri",data = df);
+
+df["SahaYili"].value_counts() #when looking at field year data and comparing with energy data
+Due to the low data having high energy data, the field year is the highest 6, all data should be compared by looking at the data density.
+
+sns.boxplot(x = "SahaYili", y = "EnerjiVerileri", hue="PanelCesidi",  data = df);
+
+sns.boxplot(x = "Albedo", y = "EnerjiVerileri", hue="PanelCesidi",  data = df);
+
+sns.scatterplot(x = "Date", y = "EnerjiVerileri", hue = "Albedo", style="PanelCesidi", data=df); #can be helpful in determining the type of panel to be used depending on albedo
+
+sns.scatterplot(x = "Date", y = "EnerjiVerileri",hue="PanelCesidi", size="HavaDurumu", data=df); #can be helpful in determining the type of panel to be used depending on albedo
+
+sns.lmplot(x="EnerjiVerileri",y="HavaDurumu",data=df); #Linear increase of weather is observed with the increase of energy data
+
+sns.lmplot(x = "GuneslenmeSuresi",y = "EnerjiVerileri", hue="PanelCesidi",data = df); #With the increase of energy data, linear increase in sunshine time is observed
+
+sns.lmplot(x = "HavaDurumu",y = "EnerjiVerileri", hue="PanelCesidi",data = df); # By adding the categorical variable of weather and panel type with the increase of energy data
+# linear increase observed
+
+sns.lmplot(x = "HavaDurumu",y = "EnerjiVerileri", hue="InvertorCesidi",data = df); # Linear increase in sunshine duration is observed with the increase of energy data
+
+sns.lmplot(x = "HavaDurumu",y = "EnerjiVerileri", hue = "InvertorCesidi", col = "PanelCesidi", data = df); # With the increase of energy data
+# linear increase is observed depending on weather, panel type and inverter type
