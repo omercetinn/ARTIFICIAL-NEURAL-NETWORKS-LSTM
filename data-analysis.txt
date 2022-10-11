@@ -173,6 +173,8 @@ sns.lineplot(x="GuneslenmeSuresi",
              hue="Albedo",
              style="PanelCesidi",
              markers=True, dashes=False, data=df); 
-## GROUPING PROCESS            
+             
+## GROUPING PROCESS           
+
 df.groupby("Il")
 
