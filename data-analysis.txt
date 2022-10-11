@@ -138,3 +138,41 @@ sns.lmplot(x = "HavaDurumu",y = "EnerjiVerileri", hue="InvertorCesidi",data = df
 
 sns.lmplot(x = "HavaDurumu",y = "EnerjiVerileri", hue = "InvertorCesidi", col = "PanelCesidi", data = df); # With the increase of energy data
 # linear increase is observed depending on weather, panel type and inverter type
+
+sns.lmplot(x = "GuneslenmeSuresi",y = "EnerjiVerileri", hue = "InvertorCesidi", col = "PanelCesidi", data = df);
+# With the increase of energy data # linear increase is observed depending on weather, panel type and inverter types
+
+sns.lmplot(x = "HavaDurumu",y = "EnerjiVerileri", hue = "Albedo", col = "PanelCesidi", data = df);
+
+sns.pairplot(df, markers=["o","s","D"]); #all graphics
+
+sns.pairplot(df, kind="reg");
+
+sns.jointplot(x="HavaDurumu",y="EnerjiVerileri", data=df, kind="reg");
+
+sns.jointplot(x="GuneslenmeSuresi",y="EnerjiVerileri", data=df, kind="reg");
+
+sns.lineplot(x="GuneslenmeSuresi",y="EnerjiVerileri",hue="PanelCesidi",data=df); # comparison of sunbathing times with energy data panel type
+# output as line chart
+
+sns.lineplot(x="GuneslenmeSuresi",y="EnerjiVerileri",hue="Albedo",data=df); # comparison of sunbathing time with albedo
+
+sns.lineplot(x="GuneslenmeSuresi",
+             y="EnerjiVerileri",
+             hue="Albedo",
+             style="PanelCesidi",
+             markers=True, dashes=False, data=df); # comparison of sunshine duration, panel type and albedo
+             
+dategroup=df.groupby('Date').mean()
+plt.figure(figsize=(12,5))
+dategroup['EnerjiVerileri'].plot(x=df.Date)
+plt.title('Average Energy') # timed evaluation
+
+sns.lineplot(x="GuneslenmeSuresi",
+             y="EnerjiVerileri",
+             hue="Albedo",
+             style="PanelCesidi",
+             markers=True, dashes=False, data=df); 
+## GROUPING PROCESS            
+df.groupby("Il")
+
