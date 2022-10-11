@@ -7,6 +7,7 @@ The project progressed gradually. First, a study was done on the dataset. This s
 
 -----
 TR
+# Yapay sinir Ağları ile Elektrik Üretim Tahmini
 *LSTM ile Güneş Enerji Santrallerinde Elektrik Üretim Tahmini
 **Google Colabs ile Kodlama yapılmıştır.
 
