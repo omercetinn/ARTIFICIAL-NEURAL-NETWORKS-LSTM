@@ -8,6 +8,8 @@ The project progressed gradually. First, a study was done on the dataset. This s
 These analyzes were performed using approximately 760 data.
 
 Graphs from the analysis will be uploaded.
+
+dataset in data.xslx.
 -----
 TR
 # Yapay sinir Ağları ile Elektrik Üretim Tahmini
@@ -20,5 +22,6 @@ Yaklaşık 760 veri kullanılarak bu analizler yapılmıştır.
 
 Analizlerden çıkan grafikler yüklenecektir.
 
+Veriseti data.xslx dosyası içerisindedir.
 
 
