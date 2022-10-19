@@ -178,3 +178,42 @@ sns.lineplot(x="GuneslenmeSuresi",
 
 df.groupby("Il")
 
+df.groupby("PanelCesidi")["EnerjiVerileri"].mean()
+
+df.groupby("PanelCesidi")["EnerjiVerileri"].describe()
+
+df.groupby("InvertorCesidi")["EnerjiVerileri"].describe()
+
+df.groupby("Albedo")["EnerjiVerileri"].describe()
+
+df.groupby("Il")["EnerjiVerileri"].describe() # we are grouping first "il" is categorical variable, energy data is numerical variable
+
+df.groupby("PanelCesidi").aggregate(["min",np.median,max])
+
+df.groupby("Il").aggregate({"EnerjiVerileri":"min","HavaDurumu":"min","Date":"min"})
+
+df.groupby(["PanelCesidi","InvertorCesidi"])[["EnerjiVerileri"]].aggregate("mean").unstack()
+
+df.pivot_table("EnerjiVerileri",index="PanelCesidi",columns="InvertorCesidi") # grouping two different variables using pivottable
+
+Albedo=pd.cut(df["Albedo"],[0.15,0.20,0.80]) # Comparing data by classification
+Albedo.head(10)
+
+df.pivot_table("EnerjiVerileri",["InvertorCesidi",Albedo],"PanelCesidi") # Comparing data by classification continued
+
+c=df.groupby("PanelCesidi")["EnerjiVerileri"].mean()
+
+X=df.drop(["EnerjiVerileri"],axis=1)
+y=df["EnerjiVerileri"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+
+df["EnerjiVerileri"].describe([0.01,0.2,0.5,0.75,0.9,0.95,0.99,1])
+
+import seaborn as sns
+sns.boxplot(df["EnerjiVerileri"])
+
+#df['month'] = df.date.dt.month
+#df['week_of_year'] = df.date.dt.weekofyear
+import datetime as dt
+
