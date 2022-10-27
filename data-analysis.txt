@@ -217,3 +217,79 @@ sns.boxplot(df["EnerjiVerileri"])
 #df['week_of_year'] = df.date.dt.weekofyear
 import datetime as dt
 
+## CLASSIFICATION
+
+#dataset.groupby(['Il','Date','PanelCesidi'])
+def cat_summary_with_target(dataframe,target,cat_threshold=10):
+  temp_cols=[col for col in dataframe.columns if col != 'Date']
+  cat_columns= [col for col in temp_cols if (dataframe[col].nunique()<cat_threshold and dataframe[col].dtypes in [int,float]) or (dataframe[col].dtypes=='O')]
+  for col in cat_columns:
+    print(dataframe.groupby([col]).agg({target:['mean','median','count']}))
+    
+df.loc[(df['InvertorGucu']==30) | (df['InvertorGucu']==50),'InvertorGucu']=50
+
+df.loc[(df['InvertorGucu']==60) | (df['InvertorGucu']==265) | (df['InvertorGucu']==276) ,'InvertorGucu']=265
+
+df.loc[(df['PanelGucu']==117.5) | (df['PanelGucu']==270) | (df['PanelGucu']==320) | (df['PanelGucu']==265),'PanelGucu']=270
+
+df.loc[(df['PanelCesidi']==1) | (df['PanelCesidi']==3),'PanelCesidi']=1
+
+df.loc[(df['SahaYili']==5) | (df['SahaYili']==6),'SahaYili']=5
+
+df.loc[(df['SahaYili']==2) | (df['SahaYili']==3),'SahaYili']=2
+
+cat_summary_with_target(df,'EnerjiVerileri')
+
+df.describe().T
+
+df.hist(figsize=(10,10)); # See data distributions after classification
+
+# Check for missing values
+df = df.loc[:,['Date','EnerjiVerileri']]
+
+print('Total num of missing values:') 
+print(df.EnerjiVerileri.isna().sum())
+print('')
+
+# Locate the missing value
+df_missing_date = df.loc[df.EnerjiVerileri.isna() == True]
+print('The date of missing value:')
+print(df_missing_date.loc[:,['Date']])
+
+# Replcase missing value with interpolation
+df.EnerjiVerileri.interpolate(inplace = True)
+
+df = df.drop('Date', axis = 1)
+# Split train data and test data
+train_size = int(len(df)*0.8)
+
+# train_data = df.WC.loc[:train_size] -----> it gives a series
+# Do not forget use iloc to select a number of rows
+train_data = df.iloc[:train_size]
+test_data = df.iloc[train_size:]
+# Scale data
+# The input to scaler.fit -> array-like, sparse matrix, dataframe of shape (n_samples, n_features)
+scaler = MinMaxScaler().fit(train_data)
+
+train_scaled = scaler.transform(train_data)
+test_scaled = scaler.transform(test_data)
+
+# Create input dataset
+# Th input shape should be [samples, time steps, features]
+def create_dataset (X, look_back = 1):
+    Xs, ys = [], []
+    
+    for i in range(len(X)-look_back):
+        v = X[i:i+look_back]
+        Xs.append(v)
+        ys.append(X[i+look_back])
+        
+    return np.array(Xs), np.array(ys)
+
+X_train, y_train = create_dataset(train_scaled,30)
+X_test, y_test = create_dataset(test_scaled,30)
+
+print('X_train.shape: ', X_train.shape)
+print('y_train.shape: ', y_train.shape)
+print('X_test.shape: ', X_test.shape) 
+print('y_test.shape: ', y_test.shape)
