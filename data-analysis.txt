@@ -293,3 +293,132 @@ print('X_train.shape: ', X_train.shape)
 print('y_train.shape: ', y_train.shape)
 print('X_test.shape: ', X_test.shape) 
 print('y_test.shape: ', y_test.shape)
+
+DATA ANALIST WITH LSTM AND GRU
+
+# Create GRU model
+def create_gru(units):
+    model = Sequential()
+    # Input layer 
+    model.add(GRU (units = units, return_sequences = True, 
+                 input_shape = [X_train.shape[1], X_train.shape[2]]))
+    model.add(Dropout(0.2)) 
+    # Hidden layer
+    model.add(GRU(units = units))                 
+    model.add(Dropout(0.2))
+    model.add(Dense(units = 1)) 
+    #Compile model
+    model.compile(optimizer='adam',loss='mse')
+   
+    return model
+model_gru = create_gru(64)
+
+# Create BiLSTM model
+def create_bilstm(units):
+    model = Sequential()
+    # Input layer
+    model.add(Bidirectional(LSTM(units = units, return_sequences=True), 
+                            input_shape=(X_train.shape[1], X_train.shape[2])))
+    # Hidden layer
+    model.add(Bidirectional(LSTM(units = units)))
+    model.add(Dense(1))
+    #Compile model
+    model.compile(optimizer='adam',loss='mse')
+    return model
+
+model_bilstm = create_bilstm(64)
+
+def fit_model(model):
+    early_stop = keras.callbacks.EarlyStopping(monitor = 'val_loss',
+                                               patience = 10)
+    history = model.fit(X_train, y_train, epochs = 50, validation_split = 0.2,
+                    batch_size = 16, shuffle = False, callbacks = [early_stop])
+    return history
+
+history_gru = fit_model(model_gru)
+history_bilstm = fit_model(model_bilstm)
+
+# Plot train loss and validation loss
+def plot_loss (history, model_name):
+    plt.figure(figsize = (10, 6))
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Model Train vs Validation Loss for ' + model_name)
+    plt.ylabel('Loss')
+    plt.xlabel('epoch')
+    plt.legend(['Train loss', 'Validation loss'], loc='upper right')
+
+plot_loss (history_gru, 'GRU')
+plot_loss (history_bilstm, 'Bidirectional LSTM')
+
+# Transform data back to original data space
+y_test = scaler.inverse_transform(y_test)
+y_train = scaler.inverse_transform(y_train)
+
+# Make prediction
+def prediction(model):
+    prediction = model.predict(X_test)
+    prediction = scaler.inverse_transform(prediction)
+    return prediction
+
+prediction_gru = prediction(model_gru)
+prediction_bilstm = prediction(model_bilstm)
+
+# Plot test data vs prediction
+def plot_future(prediction, model_name, y_test):
+    
+    plt.figure(figsize=(10, 6))
+    
+    range_future = len(prediction)
+
+    plt.plot(np.arange(range_future), np.array(y_test), label='Test data')
+    plt.plot(np.arange(range_future), np.array(prediction),label='Prediction')
+
+    plt.title('Test data vs prediction for ' + model_name)
+    plt.legend(loc='upper left')
+    plt.xlabel('Zaman')
+    plt.ylabel('Enerji Verileri')
+       
+plot_future(prediction_gru, 'GRU', y_test)
+plot_future(prediction_bilstm, 'Bidirectional LSTM', y_test)
+
+# Calculate MAE and RMSE
+def evaluate_prediction(predictions, actual, model_name):
+    errors = predictions - actual
+    mse = np.square(errors).mean()
+    rmse = np.sqrt(mse)
+    mae = np.abs(errors).mean()
+
+    print(model_name + ':')
+    print('Mean Absolute Error: {:.4f}'.format(mae))
+    print('Root Mean Square Error: {:.4f}'.format(rmse))
+    print('')
+
+evaluate_prediction(prediction_gru, y_test, 'GRU')
+evaluate_prediction(prediction_bilstm, y_test, 'Bidirectiona LSTM')
+
+df.dtypes
+
+temp_cols=[col for col in df.columns if col !='Date']
+
+cat_cols=[col for col in temp_cols if (df[col].nunique()<10 and df[col].dtypes in [int,float]) or (df[col].dtypes=='O')]
+
+print(df.groupby(['InvertorGucu']).agg({'EnerjiVerileri':'mean'}))
+
+df[cat_cols].dtypes
+
+df.loc[(df['InvertorGucu']==30) | (df['InvertorGucu']==50),'InvertorGucu']=1
+
+sns.histplot(df['GuneslenmeSuresi'],bins=15)
+
+np.random.seed(115)
+
+df.corr() #Relationship with the value evaluation of the data
+
+## Stats Model Setup
+
+X= df[["HavaDurumu"]]
+X[0:5]
+
+y=df["EnerjiVerileri"]
+y[0:5]
