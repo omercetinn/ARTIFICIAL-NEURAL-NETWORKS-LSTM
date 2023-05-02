@@ -10,7 +10,6 @@ Classes and observations with similar data were combined.
 After these processes, it has been tried to estimate the energy that can be produced in the coming months by using the LSTM method from artificial neural networks. 
 
 These analyzes were performed using approximately 760 data.
-
 Graphs from the analysis will be uploaded.
 
 dataset in data.xlsx
@@ -31,7 +30,6 @@ Bu işlemlerin ardından yapay sinir ağlarından LSTM yöntemi kullanılarak ge
 Yaklaşık 760 veri kullanılarak bu analizler yapılmıştır.
 
 Analizlerden çıkan grafikler yüklenecektir.
-
 Veriseti data.xlsx dosyası içerisindedir.
 
 
