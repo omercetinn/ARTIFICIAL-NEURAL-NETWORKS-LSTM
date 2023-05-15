@@ -34,3 +34,4 @@ Veriseti data.xlsx dosyası içerisindedir.
 
 
 
+
