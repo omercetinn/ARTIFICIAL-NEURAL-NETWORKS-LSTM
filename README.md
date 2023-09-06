@@ -14,7 +14,9 @@ Graphs from the analysis will be uploaded.
 
 dataset in data.xlsx
 
+
 -----
+
 
 TR
 # Yapay sinir Ağları ile Elektrik Üretim Tahmini
