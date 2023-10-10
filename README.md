@@ -34,6 +34,8 @@ Yaklaşık 760 veri kullanılarak bu analizler yapılmıştır.
 Analizlerden çıkan grafikler yüklenecektir.
 Veriseti data.xlsx dosyası içerisindedir.
 
+Yapay zeka ile ilgilenenler veya YL yapanlar için kullanılabilir bir örnek.
+
 
 
 
