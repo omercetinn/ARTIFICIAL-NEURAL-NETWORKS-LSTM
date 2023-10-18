@@ -14,6 +14,7 @@ Graphs from the analysis will be uploaded.
 
 dataset in data.xlsx
 
+A usable example for those interested in artificial intelligence or those doing a Master's Degree.
 
 -----
 
