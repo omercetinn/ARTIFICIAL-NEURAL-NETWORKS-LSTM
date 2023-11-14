@@ -20,7 +20,6 @@ A usable example for those interested in artificial intelligence or those doing 
 
 -----
 
-
 TR
 # Yapay sinir Ağları ile Elektrik Üretim Tahmini
 *LSTM ile Güneş Enerji Santrallerinde Elektrik Üretim Tahmini
