@@ -1,5 +1,5 @@
 EN
-# ARTIFICIAL-NEURAL-NETWORKS-LSTM
+# ARTIFICIAL- NEURAL- NETWORKS- LSTM
 *Electricity Production Forecast in Solar Power Plants with LSTM/
 **Coded with Google Colabs 
 
