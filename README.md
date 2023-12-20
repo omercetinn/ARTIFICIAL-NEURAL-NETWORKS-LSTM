@@ -17,7 +17,7 @@ dataset in data.xlsx
 A usable example for those interested in artificial intelligence or those doing a Master's Degree.
 
 
------
+-------
 
 TR
 # Yapay sinir Ağları ile Elektrik Üretim Tahmini
